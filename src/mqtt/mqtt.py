@@ -21,8 +21,8 @@ class MQTTClient(mqtt.Client):
     def on_message(self, mqttc, obj, msg):
         print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))
 
-    def on_publish(self, mqttc, obj, mid):
-        print("mid: "+str(mid))
+    # def on_publish(self, mqttc, obj, mid):
+    #     print("mid: "+str(mid))
 
     # def on_subscribe(self, mqttc, obj, mid, granted_qos):
     #     print("Subscribed: "+str(mid)+" "+str(granted_qos))
@@ -31,6 +31,7 @@ class MQTTClient(mqtt.Client):
     #     print(string)
 
     def pub(self, topic: str, message: str):
+        self.connect(self.host, self.port, self.keep_alive)
         self.publish(topic, message)
 
     def sub(self, topic: str, qos: int = 0):

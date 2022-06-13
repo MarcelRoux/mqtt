@@ -1,13 +1,13 @@
 import paho.mqtt.client as mqtt
 
 
-class MQTTClass(mqtt.Client):
+class MQTTClient(mqtt.Client):
     '''
     Reference: https://github.com/eclipse/paho.mqtt.python/blob/master/examples/client_sub-class.py
     '''
 
     def __init__(self, host: str, port: int = 1883, keep_alive: int = 60) -> None:
-        super().__init__(self)
+        super().__init__()
         self.host = host
         self.port = port
         self.keep_alive = keep_alive
@@ -24,16 +24,16 @@ class MQTTClass(mqtt.Client):
     def on_publish(self, mqttc, obj, mid):
         print("mid: "+str(mid))
 
-    def on_subscribe(self, mqttc, obj, mid, granted_qos):
-        print("Subscribed: "+str(mid)+" "+str(granted_qos))
+    # def on_subscribe(self, mqttc, obj, mid, granted_qos):
+    #     print("Subscribed: "+str(mid)+" "+str(granted_qos))
 
-    def on_log(self, mqttc, obj, level, string):
-        print(string)
+    # def on_log(self, mqttc, obj, level, string):
+    #     print(string)
 
-    def publish(self, topic: str, message: str):
+    def pub(self, topic: str, message: str):
         self.publish(topic, message)
 
-    def subscribe(self, topic: str, qos: int = 0):
+    def sub(self, topic: str, qos: int = 0):
         self.connect(self.host, self.port, self.keep_alive)
         self.subscribe(topic, qos)
 
@@ -45,8 +45,8 @@ class MQTTClass(mqtt.Client):
 
 def main():
     HOST = ''
-    mqttc = MQTTClass(HOST)
-    mqttc.subscribe('#')
+    mqttc = MQTTClient(HOST)
+    mqttc.sub('#')
 
 
 if __name__ == '__main__':
